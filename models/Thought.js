@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const reactionSchema = require('./Reaction');
 
 const textValidator = (text) => {
   if (text && (text.length < 1 || text.length > 280)) {
@@ -21,6 +22,8 @@ const thoughtSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  reaction:[reactionSchema]
+  
 });
 
 const Thought = model('Thought', thoughtSchema);
