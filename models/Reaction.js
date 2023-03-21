@@ -2,11 +2,11 @@ const {Schema, Types} = require('mongoose');
 
 const reactionSchema = new Schema({
     reactionId: {
-        type: ObjectId,
+        type: Schema.Type.ObjectId,
         default: new ObjectId
     },
     reactionBody: {
-        type: string,
+        type: String,
         required: true,
         maxLength: 280
     },
