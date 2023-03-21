@@ -1,14 +1,14 @@
-const { User, Thought } = require('../models');
+const { Thoughts, User } = require('../models');
 
 module.exports = {
-  // Get all users
-  getCourses(req, res) {
-    Course.find()
+ 
+  getUser(req, res) {
+    User.find()
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
-  // Get a user by their id
-  getSingleCourse(req, res) {
+
+  getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select('-__v')
       .then((user) =>
@@ -18,37 +18,36 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Create a course
-  createCourse(req, res) {
-    Course.create(req.body)
-      .then((course) => res.json(course))
+  
+  createUser(req, res) {
+    User.create(req.body)
+      .then((user) => res.json(user))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
       });
   },
-  // Delete a course
-  deleteCourse(req, res) {
-    Course.findOneAndDelete({ _id: req.params.courseId })
-      .then((course) =>
-        !course
-          ? res.status(404).json({ message: 'No course with that ID' })
-          : Student.deleteMany({ _id: { $in: course.students } })
+  deleteUser(req, res) {
+    User.findOneAndDelete({ _id: req.params.userId })
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with that ID' })
+          : Thoughts.deleteMany({ _id: { $in: user.thoughts } })
       )
-      .then(() => res.json({ message: 'Course and students deleted!' }))
+      .then(() => res.json({ message: 'Users and thoughts deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
-  // Update a course
-  updateCourse(req, res) {
-    Course.findOneAndUpdate(
-      { _id: req.params.courseId },
+  
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
-      .then((course) =>
-        !course
-          ? res.status(404).json({ message: 'No course with this id!' })
-          : res.json(course)
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with this id!' })
+          : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
