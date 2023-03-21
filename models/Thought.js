@@ -1,31 +1,44 @@
-const { Schema, model } = require('mongoose');
-const reactionSchema = require('./Reaction');
+const {Schema, model} = require('mongoose');
 
-const textValidator = (text) => {
-  if (text && (text.length < 1 || text.length > 280)) {
-    return false;
-  }
-  return true;
-};
+const thoughtSchema = new Schema(
+    {
+        thoughtsText: {
+            type: String,
+            required: true,
+            max_length: 280
 
-const thoughtSchema = new Schema({
-  thoughtText: {
-    type: String,
-    required: true,
-    validate: [textValidator, 'Text must be between 1 and 280 characters'],
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  reaction:[reactionSchema]
-  
-});
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        toJSON: {
+            getters: true,
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    reactions: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Reaction'
+        }
 
-const Thought = model('Thought', thoughtSchema);
+    ],
 
-module.exports = Thought;
+    reactionCount: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Reaction'
+        }
+    ]
+    }}
+)
+    thoughtsSchema.virtual('reactionCount').get(function() {
+        return this.reactions.length;
+    });
+
+    const Thought = model('Thoughts', thoughtSchema);
+
+    module.exports = Thought;
+    
