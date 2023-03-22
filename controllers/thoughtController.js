@@ -4,7 +4,7 @@ module.exports = {
  
   getThoughts(req, res) {
     Thought.find()
-      .then((users) => res.json(users))
+      .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
 
@@ -12,13 +12,10 @@ module.exports = {
     Thought.findOne({ _id: req.params.thoughtId })
       .select('-__v')
       .then((thought) =>
-        !thought
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : res.json(thought)
+        thought ? res.json(thought) : res.status(404).json({ message: 'No thought with that ID' })
       )
       .catch((err) => res.status(500).json(err));
   },
-  
   createThought(req, res) {
     Thought.create(req.body)
       .then((user) => res.json(user))
@@ -30,11 +27,12 @@ module.exports = {
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
       .then((thought) =>
-        !thought
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : Thought.deleteMany({ _id: { $in: user.thought } })
+        thought
+          ? Thought.deleteMany({ _id: { $in: thought.reactions } }).then(() =>
+              res.json({ message: 'Thought and associated reactions deleted!' })
+            )
+          : res.status(404).json({ message: 'No thought with that ID' })
       )
-      .then(() => res.json({ message: 'Thought deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   

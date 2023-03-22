@@ -2,10 +2,10 @@ const {Schema, model} = require('mongoose');
 
 const thoughtSchema = new Schema(
     {
-        thoughtsText: {
-            type: String,
-            required: true,
-            max_length: 280
+    thoughtText: {
+          type: String,
+          required: true,
+          max_length: 280
 
     },
     createdAt: {
@@ -38,7 +38,7 @@ const thoughtSchema = new Schema(
         return this.reactions.length;
     });
 
-    const Thought = model('Thought', thoughtSchema);
+    const Thought = model('thought', thoughtSchema);
 
     module.exports = Thought;
     

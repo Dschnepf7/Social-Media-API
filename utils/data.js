@@ -4,7 +4,7 @@ const user1 = {
 }
 
 const thought1 = {
-    thoughtText: "This is the thoughtText",
+    thoughtsText: "This is the thoughtText",
     username: "JohnDoe"
 }
 
