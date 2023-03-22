@@ -18,20 +18,22 @@ const thoughtSchema = new Schema(
         type: String,
         required: true
     },
-    reactions: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Reaction'
-        }
+    reaction: [
+        reactionSchema
 
     ],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get:timestamp=>datFormat(timestamp)
+    },
 
     reactionCount: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Reaction'
         }
-    ]
+    ],
     }}
 )
     thoughtSchema.virtual('reactionCount').get(function() {

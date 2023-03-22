@@ -17,13 +17,14 @@ const reactionCountSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        toJSON: {
-            getters: true,
-    
-            },
+        get:timestamp => dateFormat(timestamp)
         },  
-
-    
-});
+    },
+    {
+        toJSON: {
+            getters:true,
+        },
+        id: false,
+    });
 
 module.exports = reactionCountSchema
