@@ -23,7 +23,7 @@ const userSchema = new Schema(
         }
     ],
 
-    friends: [
+    friend: [
         {
             type: Schema.Types.ObjectId,
             ref: 'User'
@@ -33,11 +33,12 @@ const userSchema = new Schema(
 {
     toJSON: {
         virtuals: true,
-    }
+    },
+    id: false
 })
 
 userSchema.virtual('friendCount').get(function() {
-    return this.friends.length;
+    return this.friend.length;
 });
 
 const User = model('User', userSchema);
