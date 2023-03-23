@@ -27,4 +27,4 @@ const reactionCountSchema = new Schema({
         id: false,
     });
 
-module.exports = reactionCountSchema
+module.exports = reactionSchema
