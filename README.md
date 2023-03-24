@@ -7,6 +7,8 @@ This application is a rest API that utilizes mongodb, mongoose, and express to s
 
 ## Walkthrough Video
 
+https://drive.google.com/file/d/1IE80h4O4G_J0YvCQv9Z_X61Ay8LBvQUG/view
+
 ## Screenshot
 
 ![screenshot](./images/Screenshot-for-assignment18.png)
